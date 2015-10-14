@@ -1,3 +1,5 @@
 <p>
-	<%= @user.length %>
+	<% @user.each do |t|%>
+	<%= t.firstname%>
+	<% end %>
 </p>

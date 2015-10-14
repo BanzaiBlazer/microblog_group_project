@@ -27,8 +27,10 @@ get "/sign_up" do
 end
 
 get "/profile" do
+	@user = User.where(session[:user_id])
 	erb :profile
 end
+
 post "/login" do
 	@user = User.where(username: params[:username]).first
 	if @user && @user.password == params[:password]
@@ -74,13 +76,12 @@ post "/user_create" do
 	# 	params[:password].empty?
 	# 	redirect to("/user_create_error")
 	# else
-
-		User.create({
-			:username => params[:username],
-			:email => params[:email],
-			:password => params[:password]
-		})
-		redirect to("/home")
+	User.create({
+		:username => params[:username],
+		:email => params[:email],
+		:password => params[:password]
+	})
+	redirect to("/home")
 	# end
 end
 
