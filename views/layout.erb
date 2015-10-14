@@ -3,22 +3,22 @@
 	<title>Blog-e</title>
 	<meta charset="utf-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="">
-	
-<style type="text/css">
-body,td,th {
-	font-family: Arial, Helvetica, sans-serif;
-}
-</style>
-
+	<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 </head>
 <body>
 	<header>
-		<p><a href="/home"><img src="Images/Blog-e.png" width="367" height="152" /></a></p>
+		<form method="post" action="/login">
+			<label for="username">Username</label>
+			<input type="text" name="username"/>
+			<label for="password">Password</label>
+			<input type="password" name="password"/>
+			<input type="submit"/>
+		</form>
+		<!-- Logo that links to homepage. -->
+		<a href="/home"><img src="Images/Blog-e.png" width="367" height="152" /></a>
 		<nav>
 			<ul>
 				<li><a href="/home">Home</a></li>
-				<li><a href="/posts">Posts</a></li>
 				<li><a href="/sign_up">Sign Up</a></li>
 				<li><a href="/profile">Profile</a></li>
 				<li><a href="/login">Login</a></li>

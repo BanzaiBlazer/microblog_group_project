@@ -1,7 +1,9 @@
-<form method="post" action="/login">
-	<label for="username">Username</label>
-	<input type="text" name="username"/>
-	<label for="password">Password</label>
-	<input type="password" name="password"/>
-	<input type="submit"/>
+
+<h1 id="recent">Post</h1>
+<form method="post" action="/home">
+	<label for="title">Title: </label>
+	<input type="text" name="title"/>
+	<br>
+	<label for="body">Body: </label>
+	<textarea name="body" placeholder="Type your post content here." cols="50" rows="50"></textarea>
 </form>
