@@ -28,8 +28,11 @@ get "/sign_up" do
 end
 
 get "/profile" do
-	@user = User.where(session[:user_id])
-	erb :profile
+	if current_user == true
+		erb :profile
+	else
+		redirect "/home"
+	end
 end
 
 post "/login" do
