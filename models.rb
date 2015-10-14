@@ -9,3 +9,7 @@ class User < ActiveRecord::Base
 		!self.password.match("[0-9]").nil?
 	end
 end
+
+class Post < ActiveRecord::Base
+
+end	

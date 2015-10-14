@@ -20,6 +20,7 @@ end
 
 get "/home" do
 	erb :home
+	# @newpost = Post.create({title})
 end
 
 get "/sign_up" do
@@ -41,28 +42,6 @@ post "/login" do
 	end
 	redirect "/home"
 end
-
-#ehtesh's login validation ours is above ^^
-# post "/user_login_attempt" do
-# 	# constraints for success
-# 	# 1. username needs to exist in the database
-# 	# 2. password needs to match the username's password
-
-# 	matching_users = User.all.where({
-# 		:username => params[:username]
-# 	})
-
-# 	if matching_users.first
-# 		# first way we can pass information to a redirect, by using a query string
-# 		# redirect to("/profile" + "?" + matching_users.first.name)
-
-# 		# second way we can pass information to a redirect, by using a session
-# 		session[:user_id] = matching_users.first.id
-# 		redirect to("/profile")
-# 	else
-# 		redirect to("/login_error")
-# 	end
-# end
 
 get "/logout" do
 	flash[:notice] = "You've just logged out!"
