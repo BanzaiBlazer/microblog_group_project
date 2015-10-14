@@ -1,0 +1,43 @@
+@charset "UTF-8";
+/* CSS Document */
+
+html{
+	background-color:#CCC;
+	background-image:url(https://s3.amazonaws.com/doges/doge_stars.jpg);
+}
+
+body{
+	margin:0 auto;
+	position: relative;
+	background-color: #FFFFFF;	
+	font-size: 16px;
+	color: black;
+	width: 65%;
+    height: auto;
+	float:center;
+	align:center;
+	padding:30px;
+}
+
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+	position: relative;	
+	font-size: 16px;
+	color: black;
+	width: auto;
+    height: auto;
+	max-width: 1000px;
+}
+
+#recent {
+	position: relative;	
+	margin:0 auto;
+	font-size: 48px;
+	color: random;
+	width: auto;
+    height: auto;
+	max-width: 1000px;
+}

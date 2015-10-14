@@ -1,5 +1,32 @@
-<p>
-	<% @user.each do |t|%>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+</head>
+
+<body>
+<h1 id="recent">Profile Info</h1>
+<p>User Id: <% @user.each do |t|%>
+		<%= t.user.id%>
+	<% end %></p>
+<p>User Name: <% @user.each do |t|%>
+		<%= t.username%>
+	<% end %></p>
+<p>First Name: <% @user.each do |t|%>
 		<%= t.firstname%>
-	<% end %>
+	<% end %></p>
+<p>Last Name: <% @user.each do |t|%>
+		<%= t.lastname%>
+	<% end %></p>
+<p>Email: <% @user.each do |t|%>
+		<%= t.email%>
+	<% end %></p>
+  <input type="submit" name="button" id="button" value="Edit Account" />
+  <input type="submit" name="button2" id="button2" value="Delete Account" />
 </p>
+</body>
+
