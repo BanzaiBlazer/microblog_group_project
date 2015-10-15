@@ -7,8 +7,58 @@
 		<li>Last Name: <%= @current_user.lastname%></li>
 		<li>Email: <%= @current_user.email%></li>
 <ul>
-  <input type="submit" name="button" id="button" value="Edit Account" />
-  <input type="submit" name="button2" id="button2" value="Delete Account" />
+<!--We want to edit the Username, Names, password and Email -->
+<button id="editAccount">Edit Account</button>
+<div id="editInfo">
+	<form method="POST" action"/profile">
+		<label for="usernameRadio">Edit Username? </label>
+		<input type="radio" name="usernameRadio" value="yes"/>Yes
+		<input type="radio" name="usernameRadio" value="no" checked/>No
+		<input type="text" name="username" placeholder="Enter new username."/>
+	</form>
+	<form method="POST" action"/profile">
+		<label for="fNameRadio">Edit First Name? </label>
+		<input type="radio" name="fNameRadio" value="yes"/>Yes
+		<input type="radio" name="fNameRadio" value="no" checked/>No
+		<input type="text" name="fName" placeholder="Enter new First Name."/>
+	</form>
+	<form method="POST" action"/profile">
+		<label for="lnameRadio">Edit Last Name? </label>
+		<input type="radio" name="lnameRadio" value="yes"/>Yes
+		<input type="radio" name="lnameRadio" value="no" checked/>No
+		<input type="text" name="lName" placeholder="Enter new Last Name."/>
+	</form>
+	<form method="POST" action"/profile">
+		<label for="emailRadio">Edit Email? </label>
+		<input type="radio" name="emailRadio" value="yes"/>Yes
+		<input type="radio" name="emailRadio" value="no" checked/>No
+		<input type="text" name="email" placeholder="Enter new Email."/>
+	</form>
+	<form method="POST" action"/profile">
+		<label for="passRadio">Edit Password? </label>
+		<input type="radio" name="passRadio" value="yes"/>Yes
+		<input type="radio" name="passRadio" value="no" checked/>No
+		<input type="text" name="password" placeholder="Enter new Password"/>
+	</form>
+</div>
+<!--Delete the account from table users, maybe remove posts... --> 
+<button id="deleteAccount">Delete Account</button>
 
+<script type="text/javascript">
+	$("#editAccount").click(function(){
+		$("#editInfo").slideToggle('slow');
+	});
 
+	$("input:radio").change(function(){		
+		if($(this).is(":checked") && $(this).val() === 'yes'){
+			console.log("showing");
+			$(this).siblings('input[type=text]').show(); 
+			//$("input[type=text]").show();
+		}
+		else if($(this).is(":checked") && $(this).val() === 'no'){
+			console.log("hiding");
+			$(this).siblings('input[type=text]').hide();
+		}
+	});
+</script>
 

@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
 	# def makeFullname
 	# 	# :fullname = User.firstname + " " + User.lastname
 	# end
+	has_many :posts #association method
+
 	def isSecurePassword
 		!self.password.nil? &&
 		self.password > 6 &&
@@ -11,5 +13,5 @@ class User < ActiveRecord::Base
 end
 
 class Post < ActiveRecord::Base
-
+	belongs_to :user #association method
 end	

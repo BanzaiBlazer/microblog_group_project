@@ -14,6 +14,11 @@
 			<input type="password" name="password"/>
 			<input type="submit"/>
 		</form>
+		<% if flash[:notice] %>
+			<div class="flashNotice">
+				<%= flash[:notice] %>
+			</div>
+		<% end %>
 		<!-- Logo that links to homepage. -->
 		<a href="/home"><img src="Images/Blog-e.png" width="367" height="152" /></a>
 		<nav>

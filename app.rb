@@ -19,10 +19,16 @@ def current_user
 end
 
 get "/home" do
+	@allpost = Post.all
 	erb :home
-	# @newpost = Post.create({title})
 end
-
+post "/home" do
+	@newpost = Post.create({
+		user_id: session[:user_id],
+		title: params[:title], 
+		body: params[:body]})
+	redirect "/home"
+end
 get "/sign_up" do
 	erb :sign_up
 end
@@ -33,6 +39,11 @@ get "/profile" do
 	else
 		redirect "/home"
 	end
+end
+
+post "/profile" do
+	redirect "/profile"
+	
 end
 
 post "/login" do
