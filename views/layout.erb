@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="/css/stylesheet.css">
 </head>
 <body>
+	
 	<header>
 		<form method="post" action="/login">
 			<label for="username">Username</label>
@@ -16,17 +17,28 @@
 		</form>
 		<!-- Logo that links to homepage. -->
 		<a href="/home"><img src="Images/Blog-e.png" width="367" height="152" /></a>
+		
 		<nav>
 			<ul>
 				<li><a href="/home">Home</a></li>
+				<li><a href="/contact">Contact</a></li>
 				<li><a href="/sign_up">Sign Up</a></li>
 				<li><a href="/profile">Profile</a></li>
 				<li><a href="/login">Login</a></li>
 				<li><a href="/logout">Logout</a></li>
 			</ul>
-		</nav>
+		</nav\>
 	</header>
-
+		<% if flash[:notice] %>
+			<h1 class="flash-notice">
+			<%=flash[:notice]%>
+			</h1>
+		<% end %>
+		<%if flash[:alert]%>
+			<h1 class="flash-alert">
+			<%=flash[:alert]%>
+			</h1>
+		<% end %>
 	<%= yield %>
 
 	<footer>
