@@ -15,17 +15,20 @@ m=Mandrill::API.new
 def current_user
 	if session[:user_id]
 		@current_user = User.find(session[:user_id])
-		return true
-	else
-		return false
 	end
 end
 
 get "/home" do
+	@allpost = Post.all
 	erb :home
-	# @newpost = Post.create({title})
 end
-
+post "/home" do
+	@newpost = Post.create({
+		user_id: session[:user_id],
+		title: params[:title], 
+		body: params[:body]})
+	redirect "/home"
+end
 get "/sign_up" do
 	erb :sign_up
 end
@@ -35,8 +38,39 @@ get "/contactus" do
 end
 
 get "/profile" do
-	@user = User.where(session[:user_id])
-	erb :profile
+	if current_user
+		erb :profile
+	else
+		redirect "/home"
+	end
+end
+
+post "/profile" do
+	if !current_user
+		flash[:notice] = "You're not signed in."
+		redirect "/home"
+	else #if fields are not empty, update.
+		@user = current_user
+		if !params[:username].nil? 
+			@user.update(username: params[:username])
+		elsif !params[:email].nil? 
+			@user.update(email: params[:email])
+		elsif !params[:password].nil? 
+			@user.update(password: params[:password])
+		elsif !params[:firstname].nil? 
+			@user.update(firstname: params[:fname])
+		elsif !params[:lastname].nil?	
+			@user.update(lastname: params[:lname])
+		else
+			@user.update(
+			username: params[:username],
+			firstname: params[:fname],
+			lastname: params[:lname],
+			email: params[:email],
+			password: params[:password])
+		end
+	end 
+	redirect "/profile"
 end
 
 post "/login" do
@@ -57,18 +91,22 @@ get "/logout" do
 end
 
 post "/user_create" do
-	# if params[:username].empty? ||
-	# 	params[:email].empty? ||
-	# 	params[:password].empty?
-	# 	redirect to("/user_create_error")
-	# else
-	User.create({
-		:username => params[:username],
-		:email => params[:email],
-		:password => params[:password]
-	})
-	redirect to("/home")
-	# end
+	if params[:username].empty? ||
+		params[:email].empty? ||
+		params[:password].empty? ||
+		params[:firstname].empty? ||
+		params[:lastname].empty?
+		redirect to("/user_create_error")
+	else
+		User.create({
+			:username => params[:username],
+			:email => params[:email],
+			:password => params[:password],
+			:firstname => params[:firstname],
+			:lastname => params[:lastname]
+		})
+		redirect to("/home")
+	end
 end
 
 get "/user_create_error" do
@@ -85,13 +123,13 @@ end
 
 post "/contact" do
 	message = {
-		:subject => "#{params[:subject]}",
-		:from_name => "#{params[:name]}",
-		:text => "#{params[:body]}",
-		:to => [{:email=>"bloge@hotmail.com",
-			:name => "bloge"}],
-		:html => "<html>#{params[:body]}</html>",
-		:from_email => "#{params[:email]}"
+		:subject=> "#{params[:subject]}",
+		:from_name=> "#{params[:name]}",
+		:text=> "#{params[:body]}",
+		:to=>[{:email=> "bloge@hotmail.com",
+				:name=> "bloge"}],
+		:html=>"<html>#{params[:body]}</html>",
+		:from_email=> "#{params[:email]}"
 	}
 	sending = m.messages.send (message)
 	print sending

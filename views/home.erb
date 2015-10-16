@@ -1,17 +1,27 @@
 <h1 id="recent">Post</h1>
-<form method="post" action="/home">
+<form method="POST" action="/home">
 	<p>
 	  <label for="title">Title:<br />
 	  </label>
 	  <input type="text" name="title"/>
 	  <br />
-	  <br />
-	  Body:
-	  <br />
-	  <label for="textarea"></label>
-	  <textarea name="textarea" id="textarea" cols="45" rows="5"></textarea>
-  </p>
+	  <label for="body">Body: </label>
+	  <br>
+	  <textarea name="body" id="textarea" cols="50" rows="5"></textarea>
+	</p>
 	<p>
 	  <input type="submit" name="button" id="button" value="Post" />
 	</p>
 </form>
+<h1> Feed </h1>
+<% if !@allpost.empty? %>
+	<% @allpost.reverse.each do |p| %>
+		<div class="post">
+			<h2> Title: <%= p.title %> </h2>
+			<br>
+			<p> <%= p.body %> </p>
+		</div>
+	<% end %>
+<% else %>
+	<p> There are no posts, yet :( </p>
+<% end %>

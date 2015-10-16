@@ -12,10 +12,21 @@ body{
 	background-color: #FFFFFF;	
 	font-size: 16px;
 	color: black;
-	width: 65%;
+	width: 70%;
     height: auto;
 	float:center;
+	text-align: center;
 	padding:30px;
+}
+nav {
+	float:left;
+	text-align: left;
+	border:4px solid black;
+	padding: 10px;
+}
+ul{
+	list-style-type: none;
+	margin-right:20px;
 }
 
 body,td,th {
@@ -29,6 +40,15 @@ p {
 	width: auto;
     height: auto;
 	max-width: 1000px;
+}
+#editInfo {
+	border: 5px solid black;
+	padding:10px;
+	margin: 10 px;
+	display:none;
+}
+#editInfo input[type="text"]{
+	display:none;
 }
 
 #recent {
