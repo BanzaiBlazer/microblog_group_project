@@ -3,18 +3,19 @@ require 'sinatra'
 require 'sinatra/activerecord'
 require 'rack-flash'
 require './models.rb'
+require 'mandrill'
 
 set :database, "sqlite3:db/database.sqlite3"
 
 set :sessions,true
 use Rack::Flash
 
+m = Mandrill::API.new 
+
+
 def current_user
 	if session[:user_id]
 		@current_user = User.find(session[:user_id])
-		return true
-	else
-		return false
 	end
 end
 
@@ -34,7 +35,7 @@ get "/sign_up" do
 end
 
 get "/profile" do
-	if current_user == true
+	if current_user
 		erb :profile
 	else
 		redirect "/home"
@@ -42,8 +43,31 @@ get "/profile" do
 end
 
 post "/profile" do
+	if !current_user
+		flash[:notice] = "You're not signed in."
+		redirect "/home"
+	else #if fields are not empty, update.
+		@user = current_user
+		if !params[:username].nil? 
+			@user.update(username: params[:username])
+		elsif !params[:email].nil? 
+			@user.update(email: params[:email])
+		elsif !params[:password].nil? 
+			@user.update(password: params[:password])
+		elsif !params[:firstname].nil? 
+			@user.update(firstname: params[:fname])
+		elsif !params[:lastname].nil?	
+			@user.update(lastname: params[:lname])
+		else
+			@user.update(
+			username: params[:username],
+			firstname: params[:fname],
+			lastname: params[:lname],
+			email: params[:email],
+			password: params[:password])
+		end
+	end 
 	redirect "/profile"
-	
 end
 
 post "/login" do
@@ -64,18 +88,22 @@ get "/logout" do
 end
 
 post "/user_create" do
-	# if params[:username].empty? ||
-	# 	params[:email].empty? ||
-	# 	params[:password].empty?
-	# 	redirect to("/user_create_error")
-	# else
-	User.create({
-		:username => params[:username],
-		:email => params[:email],
-		:password => params[:password]
-	})
-	redirect to("/home")
-	# end
+	if params[:username].empty? ||
+		params[:email].empty? ||
+		params[:password].empty? ||
+		params[:firstname].empty? ||
+		params[:lastname].empty?
+		redirect to("/user_create_error")
+	else
+		User.create({
+			:username => params[:username],
+			:email => params[:email],
+			:password => params[:password],
+			:firstname => params[:firstname],
+			:lastname => params[:lastname]
+		})
+		redirect to("/home")
+	end
 end
 
 get "/user_create_error" do
@@ -86,4 +114,19 @@ get "/logout_successful" do
 	"Logout successful"
 end
 
-
+get "/contact" do
+	erb :contact
+end
+post "/contact" do
+	message = {
+		:subject=> "#{params[:subject]}",
+		:from_name=> "#{params[:name]}",
+		:text=> "#{params[:body]}",
+		:to=>[{:email=> "bloge@hotmail.com",
+				:name=> "bloge"}],
+		:html=>"<html>#{params[:body]}</html>",
+		:from_email=> "#{params[:email]}"
+	}
+	sending = m.messages.send (message)
+	print sending
+end

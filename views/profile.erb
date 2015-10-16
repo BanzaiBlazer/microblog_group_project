@@ -1,5 +1,6 @@
 
 <h1 id="recent">Profile Info</h1>
+<%= flash[:notice] if flash[:notice] %>
 <ul>
 		<li>User Id: <%= @current_user.id%></li>
 		<li>Username: <%= @current_user.username%></li>
@@ -10,36 +11,44 @@
 <!--We want to edit the Username, Names, password and Email -->
 <button id="editAccount">Edit Account</button>
 <div id="editInfo">
-	<form method="POST" action"/profile">
+	<form id="userForm" method="POST" action"/profile">
 		<label for="usernameRadio">Edit Username? </label>
 		<input type="radio" name="usernameRadio" value="yes"/>Yes
 		<input type="radio" name="usernameRadio" value="no" checked/>No
 		<input type="text" name="username" placeholder="Enter new username."/>
 	</form>
-	<form method="POST" action"/profile">
+	<br>
+	<form id="fNameForm" method="POST" action"/profile">
+		
 		<label for="fNameRadio">Edit First Name? </label>
 		<input type="radio" name="fNameRadio" value="yes"/>Yes
 		<input type="radio" name="fNameRadio" value="no" checked/>No
 		<input type="text" name="fName" placeholder="Enter new First Name."/>
 	</form>
-	<form method="POST" action"/profile">
+	<br>
+	<form id="lNameForm" method="POST" action"/profile">
+		
 		<label for="lnameRadio">Edit Last Name? </label>
 		<input type="radio" name="lnameRadio" value="yes"/>Yes
 		<input type="radio" name="lnameRadio" value="no" checked/>No
 		<input type="text" name="lName" placeholder="Enter new Last Name."/>
 	</form>
-	<form method="POST" action"/profile">
+	<br>
+	<form id="emailForm" method="POST" action"/profile">
 		<label for="emailRadio">Edit Email? </label>
 		<input type="radio" name="emailRadio" value="yes"/>Yes
 		<input type="radio" name="emailRadio" value="no" checked/>No
 		<input type="text" name="email" placeholder="Enter new Email."/>
 	</form>
-	<form method="POST" action"/profile">
+	<br>
+	<form id="passForm" method="POST" action"/profile">
 		<label for="passRadio">Edit Password? </label>
 		<input type="radio" name="passRadio" value="yes"/>Yes
 		<input type="radio" name="passRadio" value="no" checked/>No
 		<input type="text" name="password" placeholder="Enter new Password"/>
 	</form>
+	<br>
+	<input id="submitEdit" type="button" value="Submit"/>
 </div>
 <!--Delete the account from table users, maybe remove posts... --> 
 <button id="deleteAccount">Delete Account</button>
@@ -53,12 +62,14 @@
 		if($(this).is(":checked") && $(this).val() === 'yes'){
 			console.log("showing");
 			$(this).siblings('input[type=text]').show(); 
-			//$("input[type=text]").show();
 		}
 		else if($(this).is(":checked") && $(this).val() === 'no'){
 			console.log("hiding");
 			$(this).siblings('input[type=text]').hide();
 		}
+	});
+	$("#submitEdit").click(function(){
+		$("#userForm, #fNameForm, #lNameForm, #emailForm, #passForm").submit();
 	});
 </script>
 
