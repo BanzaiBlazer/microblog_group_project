@@ -73,21 +73,21 @@ post "/profile" do
 	redirect "/profile"
 end
 
-post "/login" do
-	@user = User.where(username: params[:username]).first
-	if @user && @user.password == params[:password]
-		session[:user_id] = @user.id
-		flash[:notice] = "You logged in!"
-	else
-		flash[:alert] = "We could not log you in..."
-	end
-	redirect "/home"
-end
+# post "/login" do
+# 	@user = User.where(username: params[:username]).first
+# 	if @user && @user.password == params[:password]
+# 		session[:user_id] = @user.id
+# 		flash[:notice] = "You logged in!"
+# 	else
+# 		flash[:alert] = "We could not log you in..."
+# 	end
+# 	redirect "/home"
+# end
 
-get "/logout" do
-	flash[:notice] = "You've just logged out!"
+get "/sign_out" do
+	flash[:notice] = "You just signed out!"
 	session.clear
-	redirect to("/logout_successful")
+	redirect to("/sign_out_successful")
 end
 
 post "/user_create" do
@@ -113,8 +113,8 @@ get "/user_create_error" do
 	"You did not fill out the form correctly"
 end	
 
-get "/logout_successful" do
-	"Logout successful"
+get "/sign_out_successful" do
+	"Sign out successful"
 end
 
 get "/contact" do
