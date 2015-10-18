@@ -1,32 +1,74 @@
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Untitled Document</title>
 
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
-</head>
-
-<body>
 <h1 id="recent">Profile Info</h1>
-<p>User Id: <% @user.each do |t|%>
-		<%= t.user.id%>
-	<% end %></p>
-<p>User Name: <% @user.each do |t|%>
-		<%= t.username%>
-	<% end %></p>
-<p>First Name: <% @user.each do |t|%>
-		<%= t.firstname%>
-	<% end %></p>
-<p>Last Name: <% @user.each do |t|%>
-		<%= t.lastname%>
-	<% end %></p>
-<p>Email: <% @user.each do |t|%>
-		<%= t.email%>
-	<% end %></p>
-  <input type="submit" name="button" id="button" value="Edit Account" />
-  <input type="submit" name="button2" id="button2" value="Delete Account" />
-</p>
-</body>
+<%= flash[:notice] if flash[:notice] %>
+<ul>
+		<li>User Id: <%= @current_user.id%></li>
+		<li>Username: <%= @current_user.username%></li>
+		<li>First Name: <%= @current_user.firstname%></li>
+		<li>Last Name: <%= @current_user.lastname%></li>
+		<li>Email: <%= @current_user.email%></li>
+<ul>
+<!--We want to edit the Username, Names, password and Email -->
+<button id="editAccount">Edit Account</button>
+<div id="editInfo">
+	<form id="userForm" method="POST" action"/profile">
+		<label for="usernameRadio">Edit Username? </label>
+		<input type="radio" name="usernameRadio" value="yes"/>Yes
+		<input type="radio" name="usernameRadio" value="no" checked/>No
+		<input type="text" name="username" placeholder="Enter new username."/>
+	</form>
+	<br>
+	<form id="fNameForm" method="POST" action"/profile">
+		
+		<label for="fNameRadio">Edit First Name? </label>
+		<input type="radio" name="fNameRadio" value="yes"/>Yes
+		<input type="radio" name="fNameRadio" value="no" checked/>No
+		<input type="text" name="fName" placeholder="Enter new First Name."/>
+	</form>
+	<br>
+	<form id="lNameForm" method="POST" action"/profile">
+		
+		<label for="lnameRadio">Edit Last Name? </label>
+		<input type="radio" name="lnameRadio" value="yes"/>Yes
+		<input type="radio" name="lnameRadio" value="no" checked/>No
+		<input type="text" name="lName" placeholder="Enter new Last Name."/>
+	</form>
+	<br>
+	<form id="emailForm" method="POST" action"/profile">
+		<label for="emailRadio">Edit Email? </label>
+		<input type="radio" name="emailRadio" value="yes"/>Yes
+		<input type="radio" name="emailRadio" value="no" checked/>No
+		<input type="text" name="email" placeholder="Enter new Email."/>
+	</form>
+	<br>
+	<form id="passForm" method="POST" action"/profile">
+		<label for="passRadio">Edit Password? </label>
+		<input type="radio" name="passRadio" value="yes"/>Yes
+		<input type="radio" name="passRadio" value="no" checked/>No
+		<input type="text" name="password" placeholder="Enter new Password"/>
+	</form>
+	<br>
+	<input id="submitEdit" type="button" value="Submit"/>
+</div>
+<!--Delete the account from table users, maybe remove posts... --> 
+<button id="deleteAccount">Delete Account</button>
 
+<script type="text/javascript">
+	$("#editAccount").click(function(){
+		$("#editInfo").slideToggle('slow');
+	});
+
+	$("input:radio").change(function(){		
+		if($(this).is(":checked") && $(this).val() === 'yes'){
+			console.log("showing");
+			$(this).siblings('input[type=text]').show(); 
+		}
+		else if($(this).is(":checked") && $(this).val() === 'no'){
+			console.log("hiding");
+			$(this).siblings('input[type=text]').hide();
+		}
+	});
+	$("#submitEdit").click(function(){
+		$("#userForm, #fNameForm, #lNameForm, #emailForm, #passForm").submit();
+	});
+</script>
